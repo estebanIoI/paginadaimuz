@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAIMUZ - Catálogo de Productos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-content {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #4a00e0;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .product-subtitle {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .product-features {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .product-features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .product-features li {
+            color: #333;
+            font-size: 12px;
+            padding: 4px 0;
+            padding-left: 18px;
+            position: relative;
+        }
+
+        .product-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #8e2de2;
+            font-weight: bold;
+        }
+
+        .product-prices {
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            margin: 0 -20px;
+            padding: 15px 20px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .price-label {
+            font-size: 13px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .price-value {
+            font-size: 24px;
+            color: #8e2de2;
+            font-weight: bold;
+        }
+
+        .order-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 15px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            position: sticky;
+            bottom: 0;
+        }
+
+        .order-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+        }
+
+        .order-btn::before {
+            content: "📲";
+            font-size: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f58529 0%, #dd2a7b 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                margin-bottom: 25px;
+                padding-top: 10px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .back-btn {
+                padding: 10px 18px;
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin-top: 20px;
+            }
+
+            .product-card {
+                border-radius: 16px;
+            }
+
+            .product-image {
+                height: 280px;
+            }
+
+            .product-content {
+                padding: 18px;
+            }
+
+            .product-title {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+
+            .product-subtitle {
+                font-size: 12px;
+                margin-bottom: 10px;
+            }
+
+            .product-features {
+                padding: 10px;
+                margin-bottom: 12px;
+            }
+
+            .product-features li {
+                font-size: 11px;
+                padding: 3px 0;
+                padding-left: 16px;
+            }
+
+            .product-prices {
+                margin: 0 -18px;
+                padding: 12px 18px;
+            }
+
+            .price-row {
+                margin-bottom: 6px;
+            }
+
+            .price-label {
+                font-size: 12px;
+            }
+
+            .price-value {
+                font-size: 22px;
+            }
+
+            .order-btn {
+                padding: 18px 20px;
+                font-size: 17px;
+                border-radius: 14px;
+                margin-top: 12px;
+            }
+
+            .order-btn::before {
+                font-size: 22px;
+            }
+
+            .badge {
+                font-size: 10px;
+                padding: 4px 10px;
+            }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 380px) {
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .product-image {
+                height: 240px;
+            }
+
+            .product-title {
+                font-size: 18px;
+            }
+
+            .price-value {
+                font-size: 20px;
+            }
+
+            .order-btn {
+                font-size: 15px;
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="daimuz-landing.html" class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+            Volver al Inicio
+        </a>
+
+        <div class="header">
+            <h1>CATÁLOGO DAIMUZ</h1>
+            <p>Baterías de Alta Calidad - Línea Premium</p>
+        </div>
+
+        <div class="products-grid">
+            <!-- Producto 1: Brass Tradicional -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/BRASS TRADICIONAL.jpg" alt="Brass Tradicional">
+                </div>
+                <div class="product-content">
+                    <span class="badge">LÍNEA YUCAN WULF</span>
+                    <h2 class="product-title">Brass Tradicional</h2>
+                    <p class="product-subtitle">Estilo legendario en acabado gold metálico, potencia discreta y lista para brillar.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Acabado gold metálico premium</li>
+                            <li>Potencia discreta y elegante</li>
+                            <li>Ideal para vapeo con clase</li>
+                            <li>Diseño clásico y sofisticado</li>
+                            <li>Disponible en múltiples colores</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$50,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$112,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Brass%20Tradicional&price=50000&priceCapsule=112000&image=image/catalogo/BRASS%20TRADICIONAL.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 2: All In Vape -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/ALL IN VAPE.jpg" alt="All In Vape">
+                </div>
+                <div class="product-content">
+                    <span class="badge">LÍNEA YUCAN WULF</span>
+                    <h2 class="product-title">All In Vape</h2>
+                    <p class="product-subtitle">Diseño iridiscente que roba miradas, con batería integrada y puerto USB.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Diseño iridiscente único</li>
+                            <li>Batería integrada y puerto USB</li>
+                            <li>Una sola carga para tu estilo</li>
+                            <li>Ideal para llevar donde quieras</li>
+                            <li>Siempre con clase y elegancia</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$35,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$68,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=All%20In%20Vape&price=35000&priceCapsule=68000&image=image/catalogo/ALL%20IN%20VAPE.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 3: Mini -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/MINI.jpg" alt="Mini Battery">
+                </div>
+                <div class="product-content">
+                    <span class="badge">LÍNEA YUCAN WULF</span>
+                    <h2 class="product-title">Mini</h2>
+                    <p class="product-subtitle">Batería de alta calidad perfecta para ocasiones casuales.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Tamaño compacto y portátil</li>
+                            <li>Alta calidad y rendimiento</li>
+                            <li>Perfecta para uso diario</li>
+                            <li>Diseño moderno y funcional</li>
+                            <li>Excelente relación calidad-precio</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$38,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$71,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Mini&price=38000&priceCapsule=71000&image=image/catalogo/MINI.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 4: Nova -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/nova.jpg" alt="Nova">
+                </div>
+                <div class="product-content">
+                    <span class="badge">LÍNEA YUCAN WULF</span>
+                    <h2 class="product-title">Nova</h2>
+                    <p class="product-subtitle">Modelo clásico renovado con tecnología avanzada.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Tecnología renovada</li>
+                            <li>Diseño clásico mejorado</li>
+                            <li>Fácil mantenimiento</li>
+                            <li>Gran autonomía de batería</li>
+                            <li>Excelente calidad-precio</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$47,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$79,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Nova&price=47000&priceCapsule=79000&image=image/catalogo/nova.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 5: Deck -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/DECK.jpg" alt="Deck">
+                </div>
+                <div class="product-content">
+                    <span class="badge">LÍNEA DIRECTA</span>
+                    <h2 class="product-title">Deck</h2>
+                    <p class="product-subtitle">Sistema compacto y potente con diseño moderno y discreto.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Diseño compacto tipo deck</li>
+                            <li>Fácil de transportar</li>
+                            <li>Sistema de uso intuitivo</li>
+                            <li>Acabado premium</li>
+                            <li>Rendimiento optimizado</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$95,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$122,500</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Deck&price=95000&priceCapsule=122500&image=image/catalogo/DECK.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 6: Wulf Pro -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/WULF PRO.jpg" alt="Wulf Pro">
+                </div>
+                <div class="product-content">
+                    <span class="badge">LÍNEA DIRECTA</span>
+                    <h2 class="product-title">Wulf Pro</h2>
+                    <p class="product-subtitle">Dispositivo premium con múltiples opciones de uso y diseño exclusivo.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Diseño profesional y elegante</li>
+                            <li>Múltiples opciones de colores</li>
+                            <li>Alta potencia y rendimiento</li>
+                            <li>Construcción premium y duradera</li>
+                            <li>Tecnología de punta</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$60,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$80,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Wulf%20Pro&price=60000&priceCapsule=80000&image=image/catalogo/WULF%20PRO.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 7: Wulf Ari -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/WULF ARI.jpg" alt="Wulf Ari">
+                </div>
+                <div class="product-content">
+                    <span class="badge">BATERÍAS</span>
+                    <h2 class="product-title">Wulf Ari</h2>
+                    <p class="product-subtitle">Diseño elegante y minimalista con cartucho recargable incluido.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Diseño minimalista premium</li>
+                            <li>Cartucho recargable incluido</li>
+                            <li>Fácil de usar y mantener</li>
+                            <li>Construcción de calidad</li>
+                            <li>Perfecto para uso diario</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$90,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Wulf%20Ari&price=90000&priceCapsule=90000&image=image/catalogo/WULF%20ARI.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 8: Wulf Zap -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/WULF ZAP.jpg" alt="Wulf Zap">
+                </div>
+                <div class="product-content">
+                    <span class="badge">BATERÍAS</span>
+                    <h2 class="product-title">Wulf Zap</h2>
+                    <p class="product-subtitle">Diseño icónico tipo pistola zapper con control preciso.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Diseño único tipo pistola</li>
+                            <li>Control de activación preciso</li>
+                            <li>Construcción robusta</li>
+                            <li>Agarre ergonómico</li>
+                            <li>Estilo llamativo y original</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$85,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$114,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Wulf%20Zap&price=85000&priceCapsule=114000&image=image/catalogo/WULF%20ZAP.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 9: Wulf Recon 4G -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/WULF RECON 4G.jpg" alt="Wulf Recon 4G">
+                </div>
+                <div class="product-content">
+                    <span class="badge">BATERÍAS</span>
+                    <h2 class="product-title">Wulf Recon 4G</h2>
+                    <p class="product-subtitle">Tecnología 4G con múltiples opciones de conectividad.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Tecnología 4G avanzada</li>
+                            <li>Múltiples colores disponibles</li>
+                            <li>Diseño robusto y moderno</li>
+                            <li>Alto rendimiento</li>
+                            <li>Conectividad mejorada</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$85,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$114,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Wulf%20Recon%204G&price=85000&priceCapsule=114000&image=image/catalogo/WULF%20RECON%204G.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 10: Wulf Recon -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/WULF RECON.jpg" alt="Wulf Recon">
+                </div>
+                <div class="product-content">
+                    <span class="badge">BATERÍAS</span>
+                    <h2 class="product-title">Wulf Recon</h2>
+                    <p class="product-subtitle">Diseño clásico de la línea Recon con rendimiento excepcional.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Diseño clásico Recon</li>
+                            <li>Rendimiento excepcional</li>
+                            <li>Construcción resistente</li>
+                            <li>Fácil de usar</li>
+                            <li>Batería de larga duración</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$80,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$110,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Wulf%20Recon&price=80000&priceCapsule=110000&image=image/catalogo/WULF%20RECON.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 11: Wulf Recon Pro -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/WULF RECON PRO.jpg" alt="Wulf Recon Pro">
+                </div>
+                <div class="product-content">
+                    <span class="badge">BATERÍAS</span>
+                    <h2 class="product-title">Wulf Recon Pro</h2>
+                    <p class="product-subtitle">Versión profesional con control avanzado y acabado premium.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Diseño Recon Pro avanzado</li>
+                            <li>Control profesional preciso</li>
+                            <li>Acabado premium</li>
+                            <li>Fácil acceso a controles</li>
+                            <li>Estilo único y moderno</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$95,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$125,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Wulf%20Recon%20Pro&price=95000&priceCapsule=125000&image=image/catalogo/WULF%20RECON%20PRO.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 12: Wulf Kodo Pro -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/WULF KODO PRO.jpg" alt="Wulf Kodo Pro">
+                </div>
+                <div class="product-content">
+                    <span class="badge">BATERÍAS</span>
+                    <h2 class="product-title">Wulf Kodo Pro</h2>
+                    <p class="product-subtitle">Diseño exclusivo con acabado premium y tecnología avanzada.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Diseño premium compacto</li>
+                            <li>Acabado único y llamativo</li>
+                            <li>Ergonómico y cómodo</li>
+                            <li>Batería de alto rendimiento</li>
+                            <li>Resistente y duradero</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$88,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$108,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Wulf%20Kodo%20Pro&price=88000&priceCapsule=108000&image=image/catalogo/WULF%20KODO%20PRO.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 13: Wulf Tryp -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/WULF TRYP.jpg" alt="Wulf Tryp">
+                </div>
+                <div class="product-content">
+                    <span class="badge">BATERÍAS</span>
+                    <h2 class="product-title">Wulf Tryp</h2>
+                    <p class="product-subtitle">Diseño innovador con sistema de triple función.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Sistema triple función</li>
+                            <li>Diseño innovador</li>
+                            <li>Múltiples modos de uso</li>
+                            <li>Construcción premium</li>
+                            <li>Alta versatilidad</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$92,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$120,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Wulf%20Tryp&price=92000&priceCapsule=120000&image=image/catalogo/WULF%20TRYP.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 14: Lip Balm -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/LIP BALM.jpg" alt="Lip Balm">
+                </div>
+                <div class="product-content">
+                    <span class="badge">BATERÍAS</span>
+                    <h2 class="product-title">Lip Balm</h2>
+                    <p class="product-subtitle">Diseño ultra discreto tipo bálsamo labial, perfecto para llevar a cualquier lugar.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Diseño ultra discreto</li>
+                            <li>Parece un bálsamo labial real</li>
+                            <li>Extremadamente portátil</li>
+                            <li>Perfecto para viajes</li>
+                            <li>Varios diseños disponibles</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$75,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$105,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Lip%20Balm&price=75000&priceCapsule=105000&image=image/catalogo/LIP%20BALM.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 15: High Pro Digit -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/HIGH PRO DIGIT.jpg" alt="High Pro Digit">
+                </div>
+                <div class="product-content">
+                    <span class="badge">LÍNEA DISCRETA</span>
+                    <h2 class="product-title">High Pro Digit</h2>
+                    <p class="product-subtitle">Pantalla digital con controles avanzados y múltiples opciones.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Pantalla digital informativa</li>
+                            <li>Controles precisos y personalizables</li>
+                            <li>Múltiples modos de uso</li>
+                            <li>Tecnología de última generación</li>
+                            <li>Kit completo profesional</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$70,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$99,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=High%20Pro%20Digit&price=70000&priceCapsule=99000&image=image/catalogo/HIGH%20PRO%20DIGIT.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 16: Strio Cartbox Pro -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/STRIO CARTBOX PRO.jpg" alt="Strio Cartbox Pro">
+                </div>
+                <div class="product-content">
+                    <span class="badge">LÍNEA STRIO</span>
+                    <h2 class="product-title">Strio Cartbox Pro</h2>
+                    <p class="product-subtitle">Sistema completo con cargador y accesorios incluidos.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Kit completo con cargador</li>
+                            <li>Sistema de cartuchos intercambiables</li>
+                            <li>Diseño robusto y premium</li>
+                            <li>Batería de larga duración</li>
+                            <li>Incluye todos los accesorios</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$105,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$131,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Strio%20Cartbox%20Pro&price=105000&priceCapsule=131000&image=image/catalogo/STRIO%20CARTBOX%20PRO.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 17: Strio Cartbox -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/STRIO CARTBOX.jpg" alt="Strio Cartbox">
+                </div>
+                <div class="product-content">
+                    <span class="badge">LÍNEA STRIO</span>
+                    <h2 class="product-title">Strio Cartbox</h2>
+                    <p class="product-subtitle">Diseño compacto y discreto con excelente capacidad.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Diseño ultra compacto</li>
+                            <li>Fácil de ocultar y transportar</li>
+                            <li>Sistema de cartuchos eficiente</li>
+                            <li>Construcción duradera</li>
+                            <li>Ideal para uso discreto</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$75,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$104,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Strio%20Cartbox&price=75000&priceCapsule=104000&image=image/catalogo/STRIO%20CARTBOX.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 18: Strio CartBoy -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/STRIO CARTBOY.jpg" alt="Strio CartBoy">
+                </div>
+                <div class="product-content">
+                    <span class="badge">LÍNEA STRIO</span>
+                    <h2 class="product-title">Strio CartBoy</h2>
+                    <p class="product-subtitle">Sistema de cartuchos avanzado con control preciso.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Control de potencia preciso</li>
+                            <li>Sistema de cartuchos optimizado</li>
+                            <li>Batería de alto rendimiento</li>
+                            <li>Diseño ergonómico</li>
+                            <li>Fácil recarga y mantenimiento</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$60,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$90,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Strio%20CartBoy&price=60000&priceCapsule=90000&image=image/catalogo/STRIO%20CARTBOY.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 19: Strio SmartBoy -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/STRIO SMARTBOY.jpg" alt="Strio SmartBoy">
+                </div>
+                <div class="product-content">
+                    <span class="badge">LÍNEA STRIO</span>
+                    <h2 class="product-title">Strio SmartBoy</h2>
+                    <p class="product-subtitle">Dispositivo inteligente con múltiples colores vibrantes disponibles.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Tecnología inteligente</li>
+                            <li>6 colores vibrantes disponibles</li>
+                            <li>Sistema de control avanzado</li>
+                            <li>Diseño ergonómico</li>
+                            <li>Funciones personalizables</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$80,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$108,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Strio%20SmartBoy&price=80000&priceCapsule=108000&image=image/catalogo/STRIO%20SMARTBOY.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 20: Strio Mellow -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/STRIO MELLOW.jpg" alt="Strio Mellow">
+                </div>
+                <div class="product-content">
+                    <span class="badge">LÍNEA STRIO</span>
+                    <h2 class="product-title">Strio Mellow</h2>
+                    <p class="product-subtitle">Experiencia suave y relajada con diseño elegante.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Vapeo suave y consistente</li>
+                            <li>Diseño elegante y discreto</li>
+                            <li>Fácil de usar</li>
+                            <li>Batería confiable</li>
+                            <li>Perfecto para principiantes</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$60,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$90,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Strio%20Mellow&price=60000&priceCapsule=90000&image=image/catalogo/STRIO%20MELLOW.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <!-- Producto 21: Strio Bolt -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="image/catalogo/STRIO BOLT.jpg" alt="Strio Bolt">
+                </div>
+                <div class="product-content">
+                    <span class="badge">LÍNEA STRIO</span>
+                    <h2 class="product-title">Strio Bolt</h2>
+                    <p class="product-subtitle">Kit completo con cartuchos incluidos y múltiples sabores.</p>
+                    
+                    <div class="product-features">
+                        <ul>
+                            <li>Pack completo con cartuchos</li>
+                            <li>Variedad de sabores</li>
+                            <li>Sistema sencillo de usar</li>
+                            <li>Diseño colorido y llamativo</li>
+                            <li>Todo en uno listo para usar</li>
+                        </ul>
+                    </div>
+
+                    <div class="product-prices">
+                        <div class="price-row">
+                            <span class="price-label">UNIDAD</span>
+                            <span class="price-value">$120,000</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">CON CÁPSULA</span>
+                            <span class="price-value">$162,000</span>
+                        </div>
+                    </div>
+
+                    <a href="checkout.html?product=Strio%20Bolt&price=120000&priceCapsule=162000&image=image/catalogo/STRIO%20BOLT.jpg" class="order-btn">
+                        📲 Ordenar Ahora
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
