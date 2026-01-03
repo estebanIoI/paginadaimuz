@@ -726,6 +726,11 @@
                         <input type="text" id="nombre" class="form-control" placeholder="Ej: Juan Pérez García" required>
                     </div>
 
+                    <div class="form-group">
+                        <label for="correo">Correo Electrónico <span>*</span></label>
+                        <input type="email" id="correo" class="form-control" placeholder="Ej: correo@ejemplo.com" required>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label for="cedula">Cédula <span>*</span></label>
@@ -971,6 +976,7 @@
 
 👤 DATOS DEL CLIENTE:
 • Nombre: ${orderData.nombre}
+• Correo: ${orderData.correo}
 • Cédula: ${orderData.cedula}
 • Celular: ${orderData.celular}
 
@@ -999,6 +1005,7 @@
 
 👤 *DATOS DEL CLIENTE:*
 • Nombre: ${orderData.nombre}
+• Correo: ${orderData.correo}
 • Cédula: ${orderData.cedula}
 • Celular: ${orderData.celular}
 
@@ -1062,6 +1069,7 @@
             const purchaseType = document.querySelector('input[name="purchaseType"]:checked').value;
             const color = document.querySelector('input[name="color"]:checked').value;
             const nombre = document.getElementById('nombre').value;
+            const correo = document.getElementById('correo').value;
             const cedula = document.getElementById('cedula').value;
             const celular = document.getElementById('celular').value;
             const departamento = document.getElementById('departamento').value;
@@ -1082,6 +1090,7 @@
                 unitPrice,
                 total,
                 nombre,
+                correo,
                 cedula,
                 celular,
                 departamento,
