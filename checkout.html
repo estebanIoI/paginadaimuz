@@ -885,17 +885,40 @@
 
         // Product data from URL parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const productName = urlParams.get('product') || 'Producto';
+        const productName = decodeURIComponent(urlParams.get('product') || 'Producto');
         const productPrice = parseInt(urlParams.get('price')) || 0;
-        const productPriceCapsule = parseInt(urlParams.get('priceCapsule')) || 0;
-        const productImage = urlParams.get('image') || '';
+        const productPriceCapsule = parseInt(urlParams.get('priceCapsule')) || productPrice;
+        const productImage = decodeURIComponent(urlParams.get('image') || '');
+
+        // Debug: log the values
+        console.log('Product:', productName, 'Price:', productPrice, 'Image:', productImage);
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             // Set product info
             document.getElementById('productName').textContent = productName;
             document.getElementById('productPrice').textContent = formatPrice(productPrice);
-            document.getElementById('productImg').src = productImage;
+            
+            // Handle image loading with fallback
+            const imgElement = document.getElementById('productImg');
+            if (productImage) {
+                // First try the image path as-is
+                imgElement.src = productImage;
+                imgElement.onerror = function() {
+                    // Try with encoded spaces if first attempt fails
+                    const encodedPath = productImage.replace(/ /g, '%20');
+                    if (!this.src.includes(encodedPath)) {
+                        this.src = encodedPath;
+                        this.onerror = function() {
+                            // Final fallback - show placeholder
+                            this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect fill="%238e2de2" width="80" height="80"/><text x="50%" y="50%" fill="white" text-anchor="middle" dy=".3em" font-size="12">Producto</text></svg>';
+                        };
+                    }
+                };
+            } else {
+                // No image provided - show placeholder
+                imgElement.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect fill="%238e2de2" width="80" height="80"/><text x="50%" y="50%" fill="white" text-anchor="middle" dy=".3em" font-size="12">Producto</text></svg>';
+            }
             
             // Populate departments
             const deptSelect = document.getElementById('departamento');

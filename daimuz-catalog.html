@@ -188,31 +188,63 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             width: 100%;
             background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
             color: white;
-            padding: 16px 20px;
-            border-radius: 15px;
+            padding: 18px 24px;
+            border-radius: 16px;
             text-align: center;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
+            font-weight: 700;
+            font-size: 17px;
+            letter-spacing: 0.5px;
             margin-top: 15px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-            position: sticky;
-            bottom: 0;
-        }
-
-        .order-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
         }
 
         .order-btn::before {
-            content: "📲";
-            font-size: 20px;
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .order-btn:hover::before {
+            left: 100%;
+        }
+
+        .order-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5);
+        }
+
+        .order-btn:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .order-btn-icon {
+            font-size: 24px;
+            animation: pulse-icon 2s infinite;
+        }
+
+        .order-btn-text {
+            font-size: inherit;
+        }
+
+        @keyframes pulse-icon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
         }
 
         .badge {
@@ -308,14 +340,22 @@
             }
 
             .order-btn {
-                padding: 18px 20px;
-                font-size: 17px;
-                border-radius: 14px;
-                margin-top: 12px;
+                padding: 20px 24px;
+                font-size: 18px;
+                border-radius: 16px;
+                margin-top: 15px;
+                gap: 14px;
+                box-shadow: 0 8px 25px rgba(37, 211, 102, 0.45);
+                -webkit-tap-highlight-color: transparent;
             }
 
-            .order-btn::before {
-                font-size: 22px;
+            .order-btn:active {
+                transform: scale(0.97);
+                box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            }
+
+            .order-btn-icon {
+                font-size: 26px;
             }
 
             .badge {
@@ -396,7 +436,7 @@
                     </div>
 
                     <a href="checkout.html?product=Brass%20Tradicional&price=50000&priceCapsule=110000&image=image/catalogo/BRASS%20TRADICIONAL.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -433,7 +473,7 @@
                     </div>
 
                     <a href="checkout.html?product=All%20In%20Vape&price=45000&priceCapsule=120000&image=image/catalogo/ALL%20IN%20VAPE.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -470,7 +510,7 @@
                     </div>
 
                     <a href="checkout.html?product=Mini&price=48000&priceCapsule=81000&image=image/catalogo/MINI.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -507,7 +547,7 @@
                     </div>
 
                     <a href="checkout.html?product=Nova&price=57000&priceCapsule=90000&image=image/catalogo/nova.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -544,7 +584,7 @@
                     </div>
 
                     <a href="checkout.html?product=Deck&price=105000&priceCapsule=132500&image=image/catalogo/DECK.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -581,7 +621,7 @@
                     </div>
 
                     <a href="checkout.html?product=Wulf%20Pro&price=70000&priceCapsule=110000&image=image/catalogo/WULF%20PRO.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -614,7 +654,7 @@
                     </div>
 
                     <a href="checkout.html?product=Wulf%20Ari&price=120000&priceCapsule=120000&image=image/catalogo/WULF%20ARI.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -651,7 +691,7 @@
                     </div>
 
                     <a href="checkout.html?product=Wulf%20Zap&price=95000&priceCapsule=134000&image=image/catalogo/WULF%20ZAP.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -688,7 +728,7 @@
                     </div>
 
                     <a href="checkout.html?product=Wulf%20Recon%204G&price=95000&priceCapsule=134000&image=image/catalogo/WULF%20RECON%204G.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -725,7 +765,7 @@
                     </div>
 
                     <a href="checkout.html?product=Wulf%20Recon&price=90000&priceCapsule=130000&image=image/catalogo/WULF%20RECON.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -762,7 +802,7 @@
                     </div>
 
                     <a href="checkout.html?product=Wulf%20Recon%20Pro&price=105000&priceCapsule=135000&image=image/catalogo/WULF%20RECON%20PRO.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -799,7 +839,7 @@
                     </div>
 
                     <a href="checkout.html?product=Wulf%20Kodo%20Pro&price=98000&priceCapsule=138000&image=image/catalogo/WULF%20KODO%20PRO.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -836,7 +876,7 @@
                     </div>
 
                     <a href="checkout.html?product=Wulf%20Tryp&price=92000&priceCapsule=120000&image=image/catalogo/WULF%20TRYP.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -873,7 +913,7 @@
                     </div>
 
                     <a href="checkout.html?product=Lip%20Balm&price=85000&priceCapsule=145000&image=image/catalogo/LIP%20BALM.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -910,7 +950,7 @@
                     </div>
 
                     <a href="checkout.html?product=High%20Pro%20Digit&price=80000&priceCapsule=120000&image=image/catalogo/HIGH%20PRO%20DIGIT.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -947,7 +987,7 @@
                     </div>
 
                     <a href="checkout.html?product=Strio%20Cartbox%20Pro&price=115000&priceCapsule=151000&image=image/catalogo/STRIO%20CARTBOX%20PRO.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -984,7 +1024,7 @@
                     </div>
 
                     <a href="checkout.html?product=Strio%20Cartbox&price=85000&priceCapsule=124000&image=image/catalogo/STRIO%20CARTBOX.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -1021,7 +1061,7 @@
                     </div>
 
                     <a href="checkout.html?product=Strio%20CartBoy&price=70000&priceCapsule=110000&image=image/catalogo/STRIO%20CARTBOY.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -1058,7 +1098,7 @@
                     </div>
 
                     <a href="checkout.html?product=Strio%20SmartBoy&price=90000&priceCapsule=130000&image=image/catalogo/STRIO%20SMARTBOY.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -1095,7 +1135,7 @@
                     </div>
 
                     <a href="checkout.html?product=Strio%20Mellow&price=70000&priceCapsule=110000&image=image/catalogo/STRIO%20MELLOW.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -1132,7 +1172,7 @@
                     </div>
 
                     <a href="checkout.html?product=Strio%20Bolt&price=120000&priceCapsule=162000&image=image/catalogo/STRIO%20BOLT.jpg" class="order-btn">
-                        📲 Ordenar Ahora
+                        📲<span class="order-btn-text">Ordenar Ahora</span>
                     </a>
                 </div>
             </div>
@@ -1140,3 +1180,4 @@
     </div>
 </body>
 </html>
+
